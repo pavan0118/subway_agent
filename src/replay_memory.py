@@ -9,6 +9,7 @@
 import random
 from collections import deque
 
+
 class ReplayMemory:
     """
     A ring buffer of capacity `capacity`. Each element is expected
@@ -24,7 +25,8 @@ class ReplayMemory:
         self.n_steps = n_steps
         self.capacity = capacity
         self.buffer = deque(maxlen=capacity)
-
+        
+    
     def push(self, transition):
         """
         Add a single n‐step transition to the buffer.

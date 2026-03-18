@@ -8,7 +8,8 @@ import mss
 import numpy as np
 import threading
 
-class FastFrameGrabber:
+
+class FastCapture:
     def __init__(self, bbox):
         """
         bbox: {'top': y, 'left': x, 'width': w, 'height': h}
@@ -21,7 +22,7 @@ class FastFrameGrabber:
         self._thread = threading.Thread(target=self._grab_loop, daemon=True)
         self._thread.start()
 
-    def _grab_loop(self):
+    def fast_capture(self):
         while not self._stop_flag:
             sct_img = self.sct.grab({
                 "top": self.bbox["top"],

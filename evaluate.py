@@ -1,6 +1,6 @@
 import torch
-from env import Env
-from neural_net import CNN, AI, EpsilonGreedyBody
+from src.env import Env
+from src.neural_net import CNN, AI, EpsilonGreedyBody
 import numpy as np
 
 def main():

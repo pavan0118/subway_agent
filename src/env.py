@@ -14,10 +14,10 @@ import time
 import cv2
 from pathlib import Path
 
-from action import action
-from start_game import begin
-from preprocess_image import preprocess_image  # your existing preprocessing logic
-
+from src.action import action
+from src.start_game import begin
+from src.preprocess_image import preprocess_image  # your existing preprocessing logic
+from src.fast_capture import FastCapture
 class Env:
     def __init__(self):
         self.action_space = 5

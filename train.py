@@ -10,12 +10,15 @@ import torch.nn as nn
 import torch.optim as optim
 import random
 
-from env import Env
-import n_step
-import replay_memory
-import neural_net
-from eligibility_trace import eligibility_trace
-import moving_avg
+from src.env import Env
+from src.neural_net import CNN, EpsilonGreedyBody ,AI
+from src.replay_memory import ReplayMemory
+from src.action import action
+from src import n_step
+from src.eligibility_trace import eligibility_trace
+from src import moving_avg
+
+
 
 # 1) Choose device (GPU if available, else CPU)
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -26,17 +29,17 @@ senv = Env()                                # Your Env from env.py
 number_actions = senv.action_space          # e.g. 5 possible moves
 
 # Create the CNN+LSTM “brain” and ε-greedy policy “body”
-cnn = neural_net.CNN(number_actions).to(device)
-epsilon_body = neural_net.EpsilonGreedyBody(
+cnn = CNN(number_actions).to(device)
+epsilon_body = EpsilonGreedyBody(
     initial_epsilon=1.0,
     min_epsilon=0.05,
     decay_steps=10000
 )
-ai = neural_net.AI(brain=cnn, body=epsilon_body)
+ai = AI(brain=cnn, body=epsilon_body)
 
 # 3) Set up N-step (n=2) and replay memory (capacity=20 000)
 n_steps = n_step.NStepProgress(env=senv, ai=ai, n_step=2, gamma=0.99)
-memory = replay_memory.ReplayMemory(n_steps=n_steps, capacity=20000)
+memory = ReplayMemory(n_steps=n_steps, capacity=20000)
 
 # 4) Moving‐average over the last 500 episode‐rewards
 ma = moving_avg.MA(500)
